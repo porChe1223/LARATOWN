@@ -12,7 +12,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        $shops = Shop::all();
+        return view('shops.index', compact('shops'));
     }
 
     /**
@@ -34,9 +35,21 @@ class ShopController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Shop $shop)
+    public function show($id)
     {
-        //
+        // IDが数値かをバリデーション
+        if (!is_numeric($id)) {
+            return redirect()->route('shops.index')->with('error', 'Invalid Shop ID.');
+        }
+
+        // IDに対応するShopが存在するかを確認
+        $shop = Shop::find($id);
+        if (!$shop) {
+            return redirect()->route('shops.index')->with('error', 'Shop not found.');
+        }
+
+        // 問題なければ、データを表示
+        return view('shops.show', ['shop' => $shop]);
     }
 
     /**
@@ -67,7 +80,7 @@ class ShopController extends Controller
     {
         
     }
-    
+
     public function cart(Shop $shop)
     {
 
