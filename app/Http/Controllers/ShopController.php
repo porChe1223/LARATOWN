@@ -76,9 +76,23 @@ class ShopController extends Controller
         //
     }
 
-    public function search(Shop $shop)
+    public function search(Request $request)
     {
-        
+
+        $query = Shop::query();
+
+        // キーワードが指定されている場合のみ検索を実行
+        if ($request->filled('keyword')) {
+          $keyword = $request->keyword;
+          $query->where('shop', 'like', '%' . $keyword . '%');
+        }
+
+        // ページネーションを追加（1ページに10件表示）
+        $shops = $query
+          ->latest()
+          ->paginate(10);
+
+        return view('shops.search', compact('shops'));
     }
 
     public function cart(Shop $shop)

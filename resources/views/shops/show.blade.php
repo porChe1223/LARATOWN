@@ -60,17 +60,6 @@
           margin: 10px;
           object-fit: cover;
         }
-        .back_link{
-          position: absolute;
-          bottom: 0px;
-          font-size: 18px;
-          font-weight: bold;
-          color: #3b82f6;
-          margin: 30px;
-        }
-        .back_link:hover{
-          color: #1d4ed8;
-        }
       .product-docs-right{
         float: right;
         display: flex;
@@ -110,4 +99,15 @@
           .button:hover{
             background-color: #2b6cb0;
           }
+  .back_link{
+          position: absolute;
+          bottom: 0px;
+          font-size: 18px;
+          font-weight: bold;
+          color: #3b82f6;
+          margin: 30px;
+        }
+  .back_link:hover{
+    color: #1d4ed8;
+  }
 </style>
