@@ -10,7 +10,7 @@
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
 
         <div class="product-container">
-          @foreach($shops as $shop)
+          @foreach($cart as $cart)
           <div class="product-group">
 
               <div class="product-item">
