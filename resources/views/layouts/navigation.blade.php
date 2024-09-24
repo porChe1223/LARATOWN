@@ -22,7 +22,7 @@
                         {{ __('商品検索') }}
                     </x-nav-link>
                     <x-nav-link :href="route('shops.cart')" :active="request()->routeIs('shops.cart')">
-                        {{ __('買い物カゴ') }}
+                        {{ __('カート') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                 {{ __('商品検索') }}
             </x-nav-link>
             <x-responsive-nav-link :href="route('shops.cart')" :active="request()->routeIs('shops.cart')">
-                {{ __('買い物カゴ') }}
+                {{ __('カート') }}
             </x-responsive-nav-link>
         </div>
 

@@ -21,16 +21,25 @@
                   <span class="price">{{$shop->price}}円</span>
                   <span class="stock">残り{{$shop->stock}}個</span>
                 </div>
-                <button class="button">購入する</button>
+                <button class="cart-button">カートに追加する</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <a class='back_link' href="{{ route('shops.index') }}">商品一覧に戻る</a>
+    <a class='back_link' href="javascript:history.back()">↩︎戻る</a>
   </div>
 </x-app-layout>
+
+
+<script>
+  document.querySelector('.cart-button').addEventListener('click', function() {
+    if (confirm('本当にカートに追加しますか？')) {
+      alert('カートに追加しました');
+    }
+  });
+</script>
 
 
 <style>  
@@ -60,17 +69,6 @@
           margin: 10px;
           object-fit: cover;
         }
-        .back_link{
-          position: absolute;
-          bottom: 0px;
-          font-size: 18px;
-          font-weight: bold;
-          color: #3b82f6;
-          margin: 30px;
-        }
-        .back_link:hover{
-          color: #1d4ed8;
-        }
       .product-docs-right{
         float: right;
         display: flex;
@@ -85,7 +83,7 @@
         }
           .description{
             margin: 10px;
-            height: 200px;
+            height: 160px;
           }
           .price{
             margin: 10px;
@@ -95,7 +93,7 @@
           .stock{
             margin: 20px;
           }
-          .button{
+          .cart-button{
             background-color: #4299e1;
             color: #ffffff;
             font-weight: bold;
@@ -105,9 +103,21 @@
             padding-right: 1rem;
             border-radius: 0.25rem;
             outline: none;
+            margin: 5px;
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
           }
-          .button:hover{
+          .cart-button:hover{
             background-color: #2b6cb0;
           }
+  .back_link{
+          position: absolute;
+          bottom: 0px;
+          font-size: 18px;
+          font-weight: bold;
+          color: #3b82f6;
+          margin: 30px;
+        }
+  .back_link:hover{
+    color: #1d4ed8;
+  }
 </style>
