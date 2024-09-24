@@ -29,7 +29,7 @@
 ## ルーティング設定
   GET|HEAD        shops ............................................................... shops.index › ShopController@index
   POST            shops ............................................................... shops.store › ShopController@store
-  GET|HEAD        shops/cart ............................................................ shops.cart › ShopController@cart
+  GET|HEAD        shops/cart ............................................................ shops.cart › CartController@cart
   GET|HEAD        shops/create ...................................................... shops.create › ShopController@create
   GET|HEAD        shops/search ...................................................... shops.search › ShopController@search
   GET|HEAD        shops/{shop} .......................................................... shops.show › ShopController@show
@@ -37,7 +37,7 @@
   DELETE          shops/{shop} .................................................... shops.destroy › ShopController@destroy
   GET|HEAD        shops/{shop}/edit ..................................................... shops.edit › ShopController@edit
 
-                                                                                                        Showing [9] routes
+                                                                                        Showing [9] routes
 
 ## テスト
 -   
