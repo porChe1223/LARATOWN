@@ -8,26 +8,29 @@
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-6 text-gray-900 dark:text-gray-100">
 
-        <div class="product-container">
-          @foreach($shops as $shop)
-          <div class="product-group">
+          <div class="product-container">
+          
+            @foreach($shops as $shop)
+            <div class="product-group">
 
-            <a href="{{ route('shops.show', $shop->id) }}">
-              <div class="product-item">
-                <img class="product-image" src="{{$shop->img_link}}" alt="商品画像">
-                <div class="product-info">
-                  <span>{{$shop->name}}</span><br>
-                  <span class="price">{{$shop->price}}円</span>
+              <a href="{{ route('shops.show', $shop->id) }}">
+                <div class="product-item">
+                  <img class="product-image" src="{{$shop->img_link}}" alt="商品画像">
+                  <div class="product-info">
+                    <span>{{$shop->name}}</span><br>
+                    <span class="price">{{$shop->price}}円</span>
+                  </div>
+                 <a class='show_link' href="{{ route('shops.show', $shop->id) }}">詳細を見る</a>
                 </div>
-                <a class='show_link' href="{{ route('shops.show', $shop->id) }}">詳細を見る</a>
-              </div>
-            </a>
+              </a>
+
+            </div>
+            @endforeach
 
           </div>
-          @endforeach
         </div>
-
       </div>
     </div>
   </div>
@@ -38,10 +41,12 @@
   .product-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 15px;
   }
     .product-group {
       width: calc(33.33% - 10px); 
+      box-sizing: border-box;
     }
       .product-item {
         background-color: #ffffff;

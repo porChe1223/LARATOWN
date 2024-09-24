@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shop;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -78,19 +79,17 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-
         $query = Shop::query();
 
         // キーワードが指定されている場合のみ検索を実行
         if ($request->filled('keyword')) {
           $keyword = $request->keyword;
-          $query->where('shop', 'like', '%' . $keyword . '%');
+          $query->where('name', 'like', '%' . $keyword . '%');
         }
 
         // ページネーションを追加（1ページに10件表示）
-        $shops = $query
-          ->latest()
-          ->paginate(10);
+         $shops = $query->get();
+        //   ->paginate(10);
 
         return view('shops.search', compact('shops'));
     }
