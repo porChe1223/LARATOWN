@@ -15,4 +15,9 @@ class Shop extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function carted()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

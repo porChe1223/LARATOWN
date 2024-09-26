@@ -21,7 +21,16 @@
                   <span class="price">{{$shop->price}}円</span>
                   <span class="stock">残り{{$shop->stock}}個</span>
                 </div>
-                <button class="cart-button">カートに追加する</button>
+
+                <div class="flex">
+                  
+                  <form action="{{ route('shops.addCart', $shop) }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <button class="cart-button" type="submit">カートに追加する ({{$shop->carted->count()}}個追加済み)</button>
+                  </form>
+                  
+                </div>
               </div>
             </div>
           </div>
