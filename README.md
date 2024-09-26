@@ -26,6 +26,27 @@
 -   
 -    
 
+## テスト
+-   
+
+
+## コマンドライン操作
+ ./vendor/bin/sail php artisan make:model Shop -rmf
+
+ ./vendor/bin/sail php artisan make:controller ShopController --resource
+
+ ./vendor/bin/sail php artisan make:migration create_shop_table --create=shops
+ ./vendor/bin/sail php artisan migrate
+
+ ./vendor/bin/sail php artisan make:view shops.index
+ ./vendor/bin/sail php artisan make:view shops.show
+ ./vendor/bin/sail php artisan make:view shops.search
+ ./vendor/bin/sail php artisan make:view shops.cart
+
+ ./vendor/bin/sail npm run build
+
+ ./vendor/bin/sail php artisan route:list --path=shops
+
 ## ルーティング設定
   GET|HEAD        shops ............................................................... shops.index › ShopController@index
   POST            shops ............................................................... shops.store › ShopController@store
@@ -38,6 +59,3 @@
   GET|HEAD        shops/{shop}/edit ..................................................... shops.edit › ShopController@edit
 
                                                                                         Showing [9] routes
-
-## テスト
--   

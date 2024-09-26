@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shop;
-use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Models\Shop;
 
 class CartController extends Controller
 {
@@ -13,8 +12,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::all();
-        return view('shops.cart', compact('shops'));
+        $shops = Shop::all();
+        return view('shops.index', compact('shops'));
     }
 
     /**
@@ -28,9 +27,9 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($id)
+    public function store(Shop $shop)
     {
-        auth()->shop()->attach(['shop' => $shop]);
+        $shop->carted()->attach(auth()->id());
         return back();
     }
 
@@ -61,9 +60,9 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Shop $shop)
     {
-        auth()->shop()->attach(['shop' => $shop]);
+        $shop->carted()->detach(auth()->id());
         return back();
     }
 }

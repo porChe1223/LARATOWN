@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->HasMany(Shop::class);
     }
+
+    public function cart()
+    {
+      return $this->belongsToMany(Shop::class)->withTimestamps();
+    }
 }

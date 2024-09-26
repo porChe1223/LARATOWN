@@ -18,9 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/shops/search', [ShopController::class, 'search'])->name('shops.search');
-    Route::get('/shops/cart', [CartController::class, 'cart'])->name('shops.cart');
     Route::resource('shops', ShopController::class);
-    Route::resource('cart', CartController::class);
+    Route::post('/shops/{shop}/cart', [CartController::class, 'store'])->name('shops.addCart');
+    Route::delete('/shops/{shop}/cart', [CartController::class, 'destroy'])->name('shops.removeCart');
 });
 
 require __DIR__.'/auth.php';
