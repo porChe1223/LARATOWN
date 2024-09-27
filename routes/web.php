@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,9 +19,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/shops/search', [ShopController::class, 'search'])->name('shops.search');
+    Route::get('/shops/thanks', [CartController::class, 'thanks'])->name('shops.thanks');
     Route::resource('shops', ShopController::class);
-    Route::post('/shops/{shop}/cart', [CartController::class, 'store'])->name('shops.addCart');
-    Route::delete('/shops/{shop}/cart', [CartController::class, 'destroy'])->name('shops.removeCart');
+    Route::get('cart', [CartController::class, 'index'])->name('shops.cart');
+    Route::post('cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::get('order', [OrderController::class, 'create'])->name('order.create');
+    Route::post('order', [OrderController::class, 'store'])->name('order.store');
 });
 
 require __DIR__.'/auth.php';

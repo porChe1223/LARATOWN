@@ -24,10 +24,9 @@
 
                 <div class="flex">
                   
-                  <form action="{{ route('shops.addCart', $shop) }}" method="POST">
+                  <form id="cart-form" action="{{ route('cart.add', $shop->id) }}" method="POST">
                     @csrf
-                    @method('POST')
-                    <button class="cart-button" type="submit">カートに追加する ({{$shop->carted->count()}}個追加済み)</button>
+                    <button class="cart-button" type="submit">カートに追加する</button>
                   </form>
                   
                 </div>
@@ -44,7 +43,9 @@
 
 <script>
   document.querySelector('.cart-button').addEventListener('click', function() {
-    if (confirm('本当にカートに追加しますか？')) {
+    event.preventDefault();
+    if (confirm('カートに追加しますか？')) {
+      document.getElementById('cart-form').submit();
       alert('カートに追加しました');
     }
   });
