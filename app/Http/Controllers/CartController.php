@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Cart;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -13,7 +14,8 @@ class CartController extends Controller
     public function index()
     {
         $shops = Shop::all();
-        return view('shops.index', compact('shops'));
+        $cart = session()->get('cart', []);
+        return view('shops.cart', compact('cart', 'shops'));
     }
 
     /**
@@ -64,5 +66,40 @@ class CartController extends Controller
     {
         $shop->carted()->detach(auth()->id());
         return back();
+    }
+
+    public function addToCart($id)
+    {
+        $shop = Shop::findOrFail($id);
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$id])) {
+            $cart[$id]['quantity']++;
+        } else {
+            $cart[$id] = [
+                'name' => $shop->name,
+                'quantity' => 1,
+                'price' => $shop->price
+            ];
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->route('shops.cart');
+    }
+
+    public function removeFromCart($id)
+    {
+        $cart = session()->get('cart', []);
+        if(isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->route('shops.cart');
+    }
+
+    public function thanks()
+    {
+        return view('shops.thanks');
     }
 }
