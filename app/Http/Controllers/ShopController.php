@@ -93,4 +93,9 @@ class ShopController extends Controller
 
         return view('shops.search', compact('shops'));
     }
+
+    public function thanks()
+    {
+        return view('shops.thanks');
+    }
 }

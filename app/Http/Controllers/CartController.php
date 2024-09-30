@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CartController extends Controller
 {
@@ -98,8 +101,22 @@ class CartController extends Controller
         return redirect()->route('shops.cart');
     }
 
-    public function thanks()
+    public function addToOrder(Request $request)
     {
-        return view('shops.thanks');
+        $cart = session()->get('cart', []);
+
+        $total = 0;
+        foreach ($cart as $id => $details) {
+            $total += $details['price'] * $details['quantity'];
+        }
+
+        $order = Order::create([
+            'user_id' => Auth::id(), // ログインユーザーのID
+            'total' => $total,
+            'status' => 'pending', // 初期ステータスは "pending"
+        ]);
+
+        session()->forget('cart');
+        return redirect()->route('shops.thanks');
     }
 }
