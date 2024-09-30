@@ -11,7 +11,14 @@
 
         <div class="cart-list">
           @foreach($cart as $id=>$item)
-              <li>{{ $item['name'] }} - {{ $item['quantity'] }} x ${{ $item['price'] }}</li>
+            <div class="cart-item">
+                {{ $item['name'] }} - {{ $item['quantity'] }} x ${{ $item['price'] }}</li>
+              <form action="{{ route('cart.remove', $id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button class="delete-button" type="submit">カートから削除</button>
+              </form>
+            </div>
           @endforeach
         </div>
         <div class="total-price">
@@ -24,7 +31,9 @@
             echo $total . ' 円';
           @endphp
         </div>
-        <form action="{{ route('shops.thanks') }}" method="GET">
+        <form action="{{ route('order.create') }}" method="POST">
+          @csrf
+          <input type="hidden" name="total" value="{{ $total }}">
           <button class="buy-button" type="submit">購入する</button>
         </form>
 
@@ -64,73 +73,43 @@
 
 <style>
   .cart-list{}
-  .product-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-    .product-group {
-      width: calc(33.33% - 10px); 
+    .cart-item{
+      margin: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-      .product-item {
-        background-color: #ffffff;
-        color: black;
-        font-weight: bold;
-        border: 1px solid #ebebeb;
-        border-radius: 4px;
-        padding: 3px;
-        position: relative;
-        height: 360px;
-        outline: none;
-        box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
-      }
-      .product-item:hover {
-        background-color: #f3f3f3;
-      }
-        .product-image {
-          width: 100%;
-          object-fit: cover;
+        .delete-button{
+          background-color: #4299e1;
+          color: #ffffff;
+          font-weight: bold;
+          border-radius: 0.25rem;
+          box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
         }
-        .product-info {
-          width: 100%;
-          position: absolute;
-          bottom: 25px;
-        }
-        .price{
-          color: red;
-        }
-        .stock{
-            margin: 20px;
-          }
-          .total-price{
+        .total-price{
             font-size: 24px;
             font-weight: bold;
           }
-          .buy-button{
-            background-color: #4299e1;
-            color: #ffffff;
-            font-weight: bold;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            border-radius: 0.25rem;
-            outline: none;
-            margin: 5px;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-          }
-          .buy-button:hovernot(:disabled){
-            background-color: #2b6cb0;
-          }
-          .buy-button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-          }
+      .buy-button{
+        background-color: #4299e1;
+        color: #ffffff;
+        font-weight: bold;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-radius: 0.25rem;
+        outline: none;
+        margin: 5px;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+      }
+      .buy-button:hovernot(:disabled){
+        background-color: #2b6cb0;
+      }
+      .buy-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
   .back_link{
     position: absolute;
     bottom: 0px;
