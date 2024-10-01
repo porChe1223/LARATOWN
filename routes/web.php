@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('shops', ShopController::class);
     Route::post('cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-    Route::post('/cart/addToCart', [CartController::class, 'addToOrder'])->name('order.create');
+    Route::post('/cart/addToOrder', [CartController::class, 'addToOrder'])->name('order.create');
     Route::get('cart', [CartController::class, 'index'])->name('shops.cart');
 });
 

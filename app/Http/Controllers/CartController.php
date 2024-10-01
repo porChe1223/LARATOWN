@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $shops = Shop::all();
@@ -21,50 +18,12 @@ class CartController extends Controller
         return view('shops.cart', compact('cart', 'shops'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Shop $shop)
     {
         $shop->carted()->attach(auth()->id());
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Shop $shop)
     {
         $shop->carted()->detach(auth()->id());
@@ -85,36 +44,50 @@ class CartController extends Controller
                 'price' => $shop->price
             ];
         }
-
         session()->put('cart', $cart);
+
+        $total_price = 0;
+        foreach ($cart as $item) {
+            $total_price += $item['quantity'] * $item['price'];
+        }
+        session()->put('total_price', $total_price);
+
         return redirect()->route('shops.cart');
     }
 
     public function removeFromCart($id)
     {
         $cart = session()->get('cart', []);
+
         if(isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
         }
 
+        $total_price = 0;
+        foreach ($cart as $item) {
+            $total_price += $item['quantity'] * $item['price'];
+        }
+        session()->put('total_price', $total_price);
+
         return redirect()->route('shops.cart');
     }
 
-    public function addToOrder(Request $request)
+    public function addToOrder(Request $request, Shop $shop)
     {
-        $cart = session()->get('cart', []);
-
-        $total = 0;
+        $cart = $request->session()->get('cart', []);
+        $total_price = 0;
         foreach ($cart as $id => $details) {
-            $total += $details['price'] * $details['quantity'];
+            $total_price += $details['price'] * $details['quantity'];
         }
-
-        $order = Order::create([
-            'user_id' => Auth::id(), // ログインユーザーのID
-            'total' => $total,
-            'status' => 'pending', // 初期ステータスは "pending"
-        ]);
+       
+        foreach ($cart as $item) {
+            Order::create([
+                'user_id' => Auth::id(),
+                'item_name' => $cart['name'],
+                'total_price' => $total_price,
+            ]);
+        }
 
         session()->forget('cart');
         return redirect()->route('shops.thanks');
