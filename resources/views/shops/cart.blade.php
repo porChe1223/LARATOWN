@@ -22,18 +22,10 @@
           @endforeach
         </div>
         <div class="total-price">
-          合計金額 : 
-          @php
-            $total = 0;
-            foreach($cart as $id=>$item){
-              $total += $item['quantity'] * $item['price'];
-            }
-            echo $total . ' 円';
-          @endphp
+          合計金額 : {{session('total_price')}} 円
         </div>
         <form action="{{ route('order.create') }}" method="POST">
           @csrf
-          <input type="hidden" name="total" value="{{ $total }}">
           <button class="buy-button" type="submit">購入する</button>
         </form>
 
