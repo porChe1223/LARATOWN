@@ -82,9 +82,10 @@ class CartController extends Controller
             $total_price += $details['price'] * $details['quantity'];
         }
        
-        foreach ($cart as $item) {
+        foreach ($cart as $id=>$item) {
             Order::create([
                 'user_id' => Auth::id(),
+                'item_name' => $item['name'],
                 'total_price' => $total_price,
                 'place' => $request->input('place')
             ]);
@@ -92,7 +93,7 @@ class CartController extends Controller
 
         session()->forget('cart');
         session(['total_price' => 0]);
-        
+
         return redirect()->route('shops.thanks');
     }
 }

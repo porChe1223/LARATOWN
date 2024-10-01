@@ -80,6 +80,8 @@
   }
   .cart-list{}
     .cart-item{
+      font-size: 18px;
+      font-weight: bold;
       margin: 10px;
       display: flex;
       justify-content: space-between;
