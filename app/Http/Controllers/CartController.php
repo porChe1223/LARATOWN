@@ -77,6 +77,7 @@ class CartController extends Controller
     {
         $cart = $request->session()->get('cart', []);
         $total_price = 0;
+
         foreach ($cart as $id => $details) {
             $total_price += $details['price'] * $details['quantity'];
         }
@@ -84,12 +85,14 @@ class CartController extends Controller
         foreach ($cart as $item) {
             Order::create([
                 'user_id' => Auth::id(),
-                'item_name' => $cart['name'],
                 'total_price' => $total_price,
+                'place' => $request->input('place')
             ]);
         }
 
         session()->forget('cart');
+        session(['total_price' => 0]);
+        
         return redirect()->route('shops.thanks');
     }
 }
