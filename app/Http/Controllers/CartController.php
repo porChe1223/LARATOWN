@@ -86,7 +86,7 @@ class CartController extends Controller
             Order::create([
                 'user_id' => Auth::id(),
                 'item_name' => $item['name'],
-                'total_price' => $total_price,
+                'total_price' => $item['price'],
                 'place' => $request->input('place')
             ]);
         }
